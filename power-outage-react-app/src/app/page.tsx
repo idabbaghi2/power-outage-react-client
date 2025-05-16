@@ -1,19 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import PowerOutageList from "../components/PowerOutageList";
 
 export default function Home() {
     const [outageType, setOutageType] = useState("All");
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setOutageType(e.target.value);
     };
 
+    const formattedDate = currentTime.toLocaleString("en-GB", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+    });
+
     return (
-        <div className="grid min-h-screen p-8 pb-20 gap-8 font-[family-name:var(--font-geist-sans)]">
+        <div className="relative grid min-h-screen p-8 pb-20 gap-8 font-[family-name:var(--font-geist-sans)]">
+            {/* 🖼️ Small top-left image */}
+            <div className="absolute top-0 left-0 m-4">
+                <Image
+                    src="/police.jpg" // ← Replace with your image path
+                    alt="Top Left Icon"
+                    width={80}
+                    height={80}
+                />
+            </div>
+
             <header className="flex flex-col items-center">
+                {/* Fancy Live Date Time */}
+                <div className="mb-12 text-center text-sm md:text-base text-gray-600 font-mono tracking-wide">
+                    {formattedDate}
+                </div>
+
+                {/* Logo */}
                 <div className="flex items-center gap-2">
                     <Image
                         src="/stromausfall.jpg"
@@ -23,6 +58,7 @@ export default function Home() {
                         priority
                     />
                 </div>
+
                 <p>
                     <span className="text-xl font-bold">Power Outage Tracker</span>
                 </p>
@@ -33,7 +69,9 @@ export default function Home() {
 
             {/* Dropdown Filter */}
             <div className="flex justify-center">
-                <label htmlFor="outageType" className="mr-2 font-medium">Filter Outage Type:</label>
+                <label htmlFor="outageType" className="mr-2 font-medium">
+                    Filter Outage Type:
+                </label>
                 <select
                     id="outageType"
                     value={outageType}
@@ -65,7 +103,7 @@ export default function Home() {
                         width={16}
                         height={16}
                     />
-                    Bern Datahackdays 2024
+                    Bern Datahackdays 2025
                 </a>
             </footer>
         </div>
