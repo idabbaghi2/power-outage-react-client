@@ -79,9 +79,9 @@ export default function Home() {
                     className="border rounded px-2 py-1"
                 >
                     <option value="All">All</option>
-                    <option value="Power Outage">Power Outage</option>
-                    <option value="Voltage Fluctuation">Voltage Fluctuation</option>
-                    <option value="Planned Maintenance">Planned Maintenance</option>
+                    <option value="Power_Outage">Power Outage</option>
+                    <option value="Voltage_Fluctuation">Voltage Fluctuation</option>
+                    <option value="Planned_Maintenance">Planned Maintenance</option>
                 </select>
             </div>
 
@@ -92,7 +92,7 @@ export default function Home() {
             <footer className="flex gap-[24px] flex-wrap items-center justify-center">
                 <a
                     className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-                    href="https://data-hackdays-be.ch/anmeldung/"
+                    href="https://www.police.be.ch/"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -103,7 +103,7 @@ export default function Home() {
                         width={16}
                         height={16}
                     />
-                    Bern Datahackdays 2025
+                    Kantonpolizei Bern 2025
                 </a>
             </footer>
         </div>

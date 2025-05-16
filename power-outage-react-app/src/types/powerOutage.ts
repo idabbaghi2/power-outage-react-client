@@ -1,8 +1,8 @@
 export type OutageType =
-  | "Power Outage"
-  | "Voltage Fluctuation"
-  | "Planned Maintenance";
-export type OutageStatus = "In Progress" | "Resolved" | "Planned";
+  | "Power_Outage"
+  | "Voltage_Fluctuation"
+  | "Planned_Maintenance";
+export type OutageStatus = "In_Progress" | "Resolved" | "Planned";
 
 export interface AffectedArea {
   name: string;
