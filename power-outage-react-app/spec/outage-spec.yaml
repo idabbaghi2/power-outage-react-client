@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  title: Power Outage API
+  description: API for transmitting power outage data by grid operators
+  version: 1.0.0
+servers:
+  - url: https://api.gridoperator.ch/v1
+    description: Production server
+
+paths:
+  /poweroutage:
+    post:
+      summary: Report a power outage
+      description: Grid operators report power outages with relevant information.
+      operationId: reportPowerOutage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PowerOutageReport'
+      responses:
+        '201':
+          description: Successfully reported
+        '400':
+          description: Invalid request
+        '500':
+          description: Server error
+    get:
+      summary: Retrieve a list of all power outages
+      description: Returns a list of all current power outages.
+      operationId: getAllPowerOutages
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PowerOutageReport'
+        '500':
+          description: Server error
+
+  /poweroutage/{id}:
+    get:
+      summary: Retrieve a specific power outage
+      description: Returns the details of a specific power outage based on its ID.
+      operationId: getPowerOutage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique ID of the power outage
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PowerOutageReport'
+        '404':
+          description: Power outage not found
+        '500':
+          description: Server error
+
+components:
+  schemas:
+    PowerOutageReport:
+      type: object
+      required:
+        - grid_operator
+        - outage_type
+        - start_time
+        - status
+        - affected_areas
+      properties:
+        id:
+          type: string
+          example: "12345"
+        grid_operator:
+          type: string
+          example: "BKW"
+        outage_type:
+          type: string
+          enum: [Power Outage, Voltage Fluctuation, Planned Maintenance]
+          example: "Power Outage"
+        description:
+          type: string
+          example: "We are working to resolve the issue. Thank you for your understanding."
+        start_time:
+          type: string
+          format: date-time
+          example: "2025-03-04T14:00:00Z"
+          description: "The start time of the outage (ISO 8601 format)."
+          minimum: "2000-01-01T00:00:00Z"
+          maximum: "2100-01-01T00:00:00Z"
+        estimated_end:
+          type: string
+          format: date-time
+          example: "2025-03-04T18:00:00Z"
+        status:
+          type: string
+          enum: [In Progress, Resolved, Planned]
+          example: "In Progress"
+        affected_areas:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "Bern"
+              coordinates:
+                type: object
+                properties:
+                  latitude:
+                    type: number
+                    format: float
+                    example: 46.9481
+                  longitude:
+                    type: number
+                    format: float
+                    example: 7.4474
+        affected_customers:
+          type: integer
+          example: 5000
+        report_source:
+          type: string
+          example: "Automated Monitoring"
+        last_update:
+          type: string
+          format: date-time
+          example: "2025-03-04T14:30:00Z"
