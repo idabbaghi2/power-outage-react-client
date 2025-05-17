@@ -83,9 +83,9 @@ export default function PowerOutageList({ outageType }: PowerOutageListProps) {
                       <ul className="list-disc pl-5">
                         {outage.affected_areas.map((area, idx) => (
                             <React.Fragment key={idx}>
-                              <li>Name: {area.name}</li>
-                              <li>Area: {area.place}</li>
-                              <li>SubArea: {area.subPlace}</li>
+                              <li>name: {area.name}</li>
+                              <li>place: {area.place}</li>
+                              <li>subPlace: {area.subPlace}</li>
                             </React.Fragment>
                         ))}
                       </ul>
