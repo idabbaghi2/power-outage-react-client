@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { PowerOutageReport } from "../types/powerOutage";
 import { powerOutageService } from "../services/powerOutageService";
+import React from "react";
 
 interface PowerOutageListProps {
   outageType: string;
@@ -81,7 +82,11 @@ export default function PowerOutageList({ outageType }: PowerOutageListProps) {
                       <strong>Affected Areas:</strong>
                       <ul className="list-disc pl-5">
                         {outage.affected_areas.map((area, idx) => (
-                            <li key={idx}>{area.name}</li>
+                            <React.Fragment key={idx}>
+                              <li>Name: {area.name}</li>
+                              <li>Area: {area.place}</li>
+                              <li>SubArea: {area.subPlace}</li>
+                            </React.Fragment>
                         ))}
                       </ul>
                     </div>

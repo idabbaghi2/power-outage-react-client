@@ -6,6 +6,8 @@ export type OutageStatus = "In_Progress" | "Resolved" | "Planned";
 
 export interface AffectedArea {
   name: string;
+  place: string;
+  subPlace: string;
   coordinates?: {
     latitude: number;
     longitude: number;
